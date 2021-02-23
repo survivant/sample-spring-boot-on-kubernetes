@@ -23,7 +23,7 @@ additionalAgents:
         cpu: "1"
         memory: "2048Mi"
 
-master:
+controller:
   JCasC:
     configScripts:
       creds: |
