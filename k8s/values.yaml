@@ -50,4 +50,40 @@ controller:
                   manageHooks: false
                   serverUrl: "http://192.168.50.8:32333"
                   serverVersion: VERSION_6
-
+      cloud-agent: |
+        jenkins:
+          clouds:
+            - kubernetes:
+              containerCap: 10
+              containerCapStr: "10"
+              jenkinsTunnel: "jenkins-agent:50000"
+              jenkinsUrl: "http://jenkins:8080"
+              name: "kubernetes-kaniko"
+              namespace: "jenkins"
+              podLabels:
+              - key: "jenkins/jenkins-agent-kaniko"
+                value: "true"
+              serverUrl: "https://kubernetes.default"
+              templates:
+              - containers:
+                - args: "^${computer.jnlpmac} ^${computer.name}"
+                  envVars:
+                  - envVar:
+                      key: "JENKINS_URL"
+                      value: "http://jenkins.jenkins.svc.cluster.local:8080/"
+                  image: "jenkins/inbound-agent:4.6-1"
+                  livenessProbe:
+                    failureThreshold: 0
+                    initialDelaySeconds: 0
+                    periodSeconds: 0
+                    successThreshold: 0
+                    timeoutSeconds: 0
+                  name: "jenkins-inboud-agent-kaniko"
+                  ttyEnabled: true
+                  workingDir: "/home/jenkins/agent"
+                id: "7e60ea9c-bc04-4984-8910-b00913d20b23"
+                label: "jenkins-agent-kaniko"
+                name: "jenkins-inbound-agent-kaniko"
+                namespace: "jenkins"
+                serviceAccount: "jenkins"
+                yamlMergeStrategy: "override"
