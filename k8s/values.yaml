@@ -41,13 +41,6 @@ controller:
       welcome-message: |
         jenkins:
           systemMessage: Welcome to MY DEMO CI\CD server.
-      unclassified: |
-        bitbucketEndpointConfiguration:
-          endpoints:
-            - bitbucketServerEndpoint:
-                displayName: "bitbucket server"
-                manageHooks: false
-                serverUrl: "http://192.168.50.8:32333"
-                serverVersion: VERSION_6
+
 
 
