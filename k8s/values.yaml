@@ -36,6 +36,7 @@ controller:
     - bitbucket-push-and-pull-request:2.7.0
     - atlassian-bitbucket-server-integration:2.1.3
     - blueocean-web:1.24.4
+    - cloudbees-bitbucket-branch-source:2.9.7
   JCasC:
     configScripts:
       welcome-message: |
