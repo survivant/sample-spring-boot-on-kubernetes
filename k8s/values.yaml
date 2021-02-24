@@ -34,7 +34,6 @@ controller:
     - configuration-as-code:1.47
   additionalPlugins:
     - bitbucket-push-and-pull-request:2.7.0
-    - atlassian-bitbucket-server-integration:2.1.3
     - blueocean-web:1.24.4
     - cloudbees-bitbucket-branch-source:2.9.7
   JCasC:
@@ -42,5 +41,13 @@ controller:
       welcome-message: |
         jenkins:
           systemMessage: Welcome to MY DEMO CI\CD server.
+      unclassified: |
+        bitbucketEndpointConfiguration:
+          endpoints:
+            - bitbucketServerEndpoint:
+                displayName: "bitbucket server"
+                manageHooks: false
+                serverUrl: "http://192.168.50.8:32333"
+                serverVersion: VERSION_6
 
 
