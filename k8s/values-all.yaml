@@ -1,0 +1,87 @@
+agent:
+  podName: default
+  customJenkinsLabels: default
+  podRetention: "OnFailure"
+  volumes:
+    - type: PVC
+      claimName: jenkins-agent
+      mountPath: /home/jenkins
+      readOnly: false
+
+additionalAgents:
+  maven:
+    podName: maven
+    customJenkinsLabels: maven
+    image: jenkins/jnlp-agent-maven
+    tag: jdk11
+    volumes:
+      - type: PVC
+        claimName: jenkins-agent
+        mountPath: /home/jenkins
+        readOnly: false
+    resources:
+      limits:
+        cpu: "1"
+        memory: "2048Mi"
+
+controller:
+  adminPassword: admin
+  serviceType: NodePort
+  installPlugins:
+    - kubernetes:1.29.0
+    - workflow-aggregator:2.6
+    - git:4.6.0
+    - configuration-as-code:1.47
+  additionalPlugins:
+    - bitbucket-push-and-pull-request:2.7.0
+    - atlassian-bitbucket-server-integration:2.1.3
+    - blueocean-web:1.24.4
+  JCasC:
+    configScripts:
+      welcome-message: |
+        jenkins:
+          systemMessage: Welcome to MY DEMO CI\CD server.
+      clouds: |
+        - kubernetes:
+              containerCap: 10
+              containerCapStr: "10"
+              jenkinsTunnel: "jenkins-agent:50000"
+              jenkinsUrl: "http://jenkins:8080"
+              name: "kubernetes-kaniko"
+              namespace: "jenkins"
+              podLabels:
+              - key: "jenkins/jenkins-agent-kaniko"
+                value: "true"
+              serverUrl: "https://kubernetes.default"
+              templates:
+              - containers:
+                - args: "^${computer.jnlpmac} ^${computer.name}"
+                  envVars:
+                  - envVar:
+                      key: "JENKINS_URL"
+                      value: "http://jenkins.jenkins.svc.cluster.local:8080/"
+                  image: "jenkins/inbound-agent:4.6-1"
+                  livenessProbe:
+                    failureThreshold: 0
+                    initialDelaySeconds: 0
+                    periodSeconds: 0
+                    successThreshold: 0
+                    timeoutSeconds: 0
+                  name: "jenkins-inboud-agent-kaniko"
+                  ttyEnabled: true
+                  workingDir: "/home/jenkins/agent"
+                id: "7e60ea9c-bc04-4984-8910-b00913d20b23"
+                label: "jenkins-agent-kaniko"
+                name: "jenkins-inbound-agent-kaniko"
+                namespace: "jenkins"
+                serviceAccount: "jenkins"
+                yamlMergeStrategy: "override"
+      unclassified: |
+        bitbucketEndpointConfiguration:
+            endpoints:
+            - bitbucketServerEndpoint:
+                displayName: "bitbucket server"
+                manageHooks: false
+                serverUrl: "http://192.168.50.8:32333"
+                serverVersion: VERSION_6
+
