@@ -1,4 +1,5 @@
 agent:
+  enabled: false
   podName: default
   customJenkinsLabels: default
   podRetention: "OnFailure"
@@ -8,22 +9,22 @@ agent:
       mountPath: /home/jenkins
       readOnly: false
 
-additionalAgents:
-  maven:
-    podName: maven
-    customJenkinsLabels: maven
-    image: jenkins/jnlp-agent-maven
-    tag: jdk11
-    volumes:
-      - type: PVC
-        claimName: jenkins-agent
-        mountPath: /home/jenkins
-        readOnly: false
-    resources:
-      limits:
-        cpu: "1"
-        memory: "2048Mi"
-
+#additionalAgents:
+#  maven:
+#    podName: maven
+#    customJenkinsLabels: maven
+#    image: jenkins/jnlp-agent-maven
+#    tag: jdk11
+#    volumes:
+#      - type: PVC
+#        claimName: jenkins-agent
+#        mountPath: /home/jenkins
+#        readOnly: false
+#    resources:
+#      limits:
+#        cpu: "1"
+#        memory: "2048Mi"
+#
 controller:
   adminPassword: admin
   serviceType: NodePort
