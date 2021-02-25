@@ -45,12 +45,9 @@ controller:
             - credentials:
               - usernamePassword:
                   id: "c4b453fe-ceff-4358-a43b-7fd40bd5a86d"
-                  password: "{AQAAABAAAAAQ7ijDUa4taK4xTScyvL10wP0fzgRl4IiWsaeHfyB+drA=}"
+                  password: "admin"
                   scope: GLOBAL
                   username: "admin"
-              - fileSystemServiceAccountCredential:
-                  id: "cc898b19-1e00-421e-9157-c83fe6504a16"
-                  scope: GLOBAL
       welcome-message: |
         jenkins:
           systemMessage: Welcome to MY DEMO CI\CD server.
