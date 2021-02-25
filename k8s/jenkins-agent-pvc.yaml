@@ -4,8 +4,8 @@ metadata:
   name: jenkins-agent
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: 2Gi
-  storageClassName: hostpath
+  storageClassName: local-path
